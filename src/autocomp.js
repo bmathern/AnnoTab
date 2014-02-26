@@ -160,7 +160,7 @@ Autocompleter.prototype = {
 //console.log(this.current_selection);
 		if(this.current_selection === undefined) { return false; }
 	//	var sugg = $("#suggestions > li")[this.current_selection].innerHTML;
-		$(this.text_input_el).trigger("Autocompleter:autocomp",this.current_selection);
+		$(this.text_input_el).trigger("Autocompleter:autocomplete",this.current_selection);
 		return this.current_selection;
 	},
 
@@ -173,8 +173,11 @@ Autocompleter.prototype = {
 			var concept = this.autocomp();
 			if(concept !== false) {
 				if(this.type === "TEXTAREA") { // TEXTAREA field
-					var a = this.annotations.find(function(a) {
-						return a.class == "autocomplete";
+					var a;
+					this.annotations.forEach(function(annot) {
+						if(annot.class == "autocomplete") {
+							a = annot;
+						}
 					});
 //		console.log(a);
 					if(a !== undefined) {
