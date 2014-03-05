@@ -14,8 +14,11 @@
 <script type="text/javascript">
 function init() {
 	function generate_concepts(s_array,cat) {
-		return s_array.map(function(str) {
-			return {text: str, plural: str+"s", label: str, class: cat};
+		return s_array.map(function(arr) {
+			if(typeof(arr) === "string") {
+				arr = [arr,arr+'s'];
+			}
+			return {text: arr, label: arr[0], class: cat};
 		});
 	}
 	list_fruits = [
@@ -24,18 +27,18 @@ function init() {
 		"avocado",
 		"banana",
 		"breadfruit",
-		"bilberry",
-		"blackberry",
+		["bilberry","bilberries"],
+		["blackberry","blackberries"],
 		"blackcurrant",
-		"blueberry",
-		"boysenberry",
+		["blueberry","blueberries"],
+		["boysenberry","boysenberries"],
 		"cantaloupe",
 		"currant",
-		"cherry",
+		["cherry","cherries"],
 		"cherimoya",
-		"cloudberry",
+		["cloudberry","cloudberries"],
 		"coconut",
-		"cranberry",
+		["cranberry","cranberries"],
 		"cucumber",
 		"damson",
 		"date",
@@ -60,7 +63,7 @@ function init() {
 		"lemon",
 		"lime",
 		"loquat",
-		"lychee",
+		["lychee","litchi","litchis","lychees"],
 		"mango",
 		"melon",
 		"mulberry",
@@ -92,6 +95,7 @@ function init() {
 	concepts = generate_concepts(list_fruits,"fruit");
 
 	new Autocompleter("text",concepts);
+	new Autocompleter("input",concepts);
 }
 
 $(window).load(init);
@@ -103,10 +107,19 @@ $(window).load(init);
 	background-color: lightgreen;
 	border-radius: 5px;
 }
+.autocomplete {
+	background-color: LightGrey;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+.Autocompleter .selected {
+	background-color: LightGrey;
+}
         </style>
 
 <div>
 	<textarea id="text" style="width:370px;height:100px;"></textarea>
+	<input id="input" type="text"></input>
 </div>
 
 </body>
